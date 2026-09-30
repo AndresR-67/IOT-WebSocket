@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitor de Voltaje</title>
+</head>
+
+<body>
+
+    <h1>Valor del Potenciómetro</h1>
+
+    <div id="valor" style="font-size: 2em;">
+        Esperando datos...
+    </div>
+
+    <script>
+        const websocket = new WebSocket(
+            `wss://${window.location.host}/ws`
+        );
+
+        websocket.onopen = () => {
+            console.log("Conectado al WebSocket");
+        };
+
+        websocket.onmessage = (event) => {
+            document.getElementById("valor").innerText =
+                "Valor ADC: " + event.data;
+        };
+
+        websocket.onclose = () => {
+            console.log("WebSocket cerrado");
+        };
+    </script>
+
+</body>
+</html>
